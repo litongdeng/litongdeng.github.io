@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .Title }} | {{ .Site.Title }}</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    {{ partial "header.html" . }}
+    <main class="work-page">
+        <h1>{{ .Title }}</h1>
+
+        <section class="work-section">
+            <h2>Science</h2>
+
+            <div class="story-grid">
+                {{ range where .Pages.ByDate.Reverse "Params.category" "science" }}
+                <a class="story-card" href="{{ .Params.external_url }}">
+                    {{ if .Params.image }}
+                    <img class="story-card-image" src="{{ .Params.image }}" alt="{{ .Params.image_alt }}">
+                    {{ end }}
+
+                    <div class="story-card-copy">
+                        <p class="story-meta">
+                            {{ .Params.publication }} · {{ .Date.Format "January 2, 2006" }}
+                        </p>
+
+                        <h3>
+                            {{ .Title }}
+                        </h3>
+                    </div>
+                </a>
+                {{ end }}
+            </div>
+        </section>
+
+        <section class="work-section">
+            <h2>Selected Work</h2>
+
+            <div class="story-grid">
+                {{ range where .Pages.ByWeight "Params.category" "general" }}
+<a class="story-card{{ if gt .Weight 0 }} story-card--featured{{ end }}"
+    href="{{ .Params.external_url }}">
+                    {{ if .Params.image }}
+                    <img class="story-card-image" src="{{ .Params.image }}" alt="{{ .Params.image_alt }}">
+                    {{ end }}
+
+                    <div class="story-card-copy">
+                        <p class="story-meta">
+                            {{ .Params.publication }} · {{ .Date.Format "January 2, 2006" }}
+                        </p>
+
+                        <h3>
+                            {{ .Title }}
+                        </h3>
+                    </div>
+                </a>
+                {{ end }}
+            </div>
+        </section>
+
+        <section class="work-section">
+            <h2>Breaking News</h2>
+
+            <div class="story-grid">
+                {{ range where .Pages.ByWeight "Params.category" "breaking" }} <a class="story-card"
+                    href="{{ .Params.external_url }}">
+                    {{ if .Params.image }}
+                    <img class="story-card-image" src="{{ .Params.image }}" alt="{{ .Params.image_alt }}">
+                    {{ end }}
+
+                    <div class="story-card-copy">
+                        <p class="story-meta">
+                            {{ .Params.publication }} · {{ .Date.Format "January 2, 2006" }}
+                        </p>
+
+                        <h3>
+                            {{ .Title }}
+                        </h3>
+                    </div>
+                </a>
+                {{ end }}
+            </div>
+        </section>
+
+        <section class="work-section">
+            <h2>Data</h2>
+
+            <div class="data-grid">
+                {{ range where .Pages.ByWeight "Params.category" "data" }}
+                <div class="data-viz">
+                    {{ if eq .Params.embed_type "flourish" }}
+                    <iframe title="Interactive Flourish visualization"
+                        src="https://flo.uri.sh/visualisation/{{ .Params.embed_id }}/embed"
+                        frameborder="0" scrolling="no"
+                        style="width: 100%; height: 600px; border: none;"
+                        loading="lazy"
+                        sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"></iframe>
+                    <p class="embed-credit">
+                        <a href="https://public.flourish.studio/visualisation/{{ .Params.embed_id }}/"
+                            target="_blank" rel="noopener">Made with Flourish</a>
+                    </p>
+                    {{ else if eq .Params.embed_type "datawrapper" }}
+                    <iframe title="{{ .Title }}" aria-label="Line chart"
+                        src="{{ .Params.embed_url }}" scrolling="no" frameborder="0"
+                        style="width: 0; min-width: 100% !important; border: none;"
+                        height="468" loading="lazy" data-external="1"></iframe>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+
+            <script>
+                window.addEventListener("message", function (event) {
+                    if (event.data["datawrapper-height"] !== undefined) {
+                        const frames = document.querySelectorAll("iframe");
+                        for (const chartId in event.data["datawrapper-height"]) {
+                            for (const frame of frames) {
+                                if (frame.contentWindow === event.source) {
+                                    frame.style.height =
+                                        event.data["datawrapper-height"][chartId] + "px";
+                                }
+                            }
+                        }
+                    }
+                });
+            </script>
+        </section>
+    </main>
+    {{ partial "footer.html" . }}
+</body>
+
+</html>

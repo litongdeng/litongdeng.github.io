@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Litong Deng</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+  {{ partial "header.html" . }}
+  <main class="intro">
+    <img class="portrait" src="/images/portrait.jpg" alt="Portrait of Litong Deng" width="400">
+
+    <div class="intro-copy">
+      <h1>{{ .Site.Title }}</h1>
+      <p>{{ .Site.Params.blurb }}</p>
+      <a class="work-link" href="/work/">View my work →</a>
+    </div>
+  </main>
+  {{ partial "footer.html" . }}
+</body>
+
+</html>
